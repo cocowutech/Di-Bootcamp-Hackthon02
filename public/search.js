@@ -1,6 +1,3 @@
-// Importing the marked library for Markdown conversion if needed
-import marked from 'https://cdn.jsdelivr.net/npm/marked/marked.min.js';
-
 // Define the articleSearch function that will be called on button click
 async function articleSearch(event) {
     // Prevent the default form submission behavior
@@ -13,7 +10,7 @@ async function articleSearch(event) {
     const encodedInput = encodeURIComponent(userInput);
 
     // Create the URL with the query parameter
-    const urlWithQueryParam = `http://localhost:3000/search?keyword=${encodedInput}`;
+    const urlWithQueryParam = `http://localhost:3000/search/query?keyword=${encodedInput}`;
 
     try {
         // Make an asynchronous fetch request using the URL with the query parameter
@@ -23,11 +20,11 @@ async function articleSearch(event) {
         }
 
         // Assuming the response is JSON with properties 'title' and 'content'
-        const { title, content } = await response.json();
+        const { title, data } = await response.json();
 
         // Update the DOM with the title and content
         document.getElementById('articleTitle').textContent = title;
-        document.getElementById('articleContent').innerHTML = marked(content);
+        document.getElementById('articleContent').innerHTML = marked.parse(data);
     } catch (error) {
         console.error('Error:', error);
         // Update the DOM to show the error

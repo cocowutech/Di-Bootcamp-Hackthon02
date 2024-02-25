@@ -9,12 +9,12 @@
     <h1>Search for an Article</h1>
     <form id="searchForm">
         <input type="text" id="searchInput" placeholder="Type a keyword..." required>
-        <button onclick="articleSearch()" type="submit">Search</button>
+        <button type="submit">Search</button>
     </form>
 
     <h2 id="articleTitle"></h2>
     <div id="articleContent"></div>
-
-    <script type="module" src="search.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="search.js"></script>
 </body>
 </html>

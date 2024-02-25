@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Page</title>
+</head>
+<body>
+    <h1>Search for an Article</h1>
+    <form id="searchForm">
+        <input type="text" id="searchInput" placeholder="Type a keyword..." required>
+        <button onclick="articleSearch()" type="submit">Search</button>
+    </form>
+
+    <h2 id="articleTitle"></h2>
+    <div id="articleContent"></div>
+
+    <script type="module" src="search.js"></script>
+</body>
+</html>

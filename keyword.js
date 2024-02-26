@@ -40,6 +40,7 @@
 //     console.log(insertKeywords(keyword,articleFile))
 // }
 
+// INSERT DATA TO POSTGRES--
 // Import the necessary modules
 import { promises as fs } from 'fs';
 import path from 'path';

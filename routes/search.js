@@ -29,7 +29,7 @@ router.get('/query',async(req,res) => {
             // You might want to return multiple articles or just the most relevant one
             // For simplicity, this example returns the first matching article
             const article = articles[0];
-            const filePath = path.join(process.cwd(), 'public/markdown_files', article.file_path);
+            const filePath = path.join(process.cwd(),article.file_path);
             fs.readFile(filePath, 'utf8', (err, data) => {
                 if (err) {
                   console.error(err);

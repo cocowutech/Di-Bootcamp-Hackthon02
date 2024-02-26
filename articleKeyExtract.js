@@ -24,6 +24,6 @@ function extractKeywords(content) {
   }
 
 
-  // processAndStoreArticle('article01.md','Post-traumatic stress disorder (PTSD)');
+  // processAndStoreArticle('public/markdown_files/article01.md','Post-traumatic stress disorder (PTSD)');
   // processAndStoreArticle('public/markdown_files/article02.md','10 tips to boost your mental health');
-  processAndStoreArticle('public/markdown_files/article03.md','Habitat’s Disaster Response');
+  // processAndStoreArticle('public/markdown_files/article03.md','Habitat’s Disaster Response');

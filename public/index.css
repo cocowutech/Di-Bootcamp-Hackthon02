@@ -6,28 +6,27 @@
 
 body {
     font-family: 'Poppins','sans-serif';
-    display: flex;
-    flex-wrap: wrap;
+    /* display: flex;
+    flex-wrap: wrap; */
     margin: 0;
-    padding: 3rem;
+    /* padding: 3rem; */
 }
-
-.add{
+/* 
+#add{
     position: fixed;
-    top: 1rem;
-    right: 1rem;
-}
+    top: 0.5rem;
+    left: 1rem;
+} */
 
 .note{
-    background-color: aliceblue;
+    background-color: rgb(241, 255, 240);
     box-shadow: 0 0 10px 4px rgba(0,0,0,0.1);
     margin: 30px 20px;
-    height: 400px;
     width: 400px;
 }
 
 .note .tools {
-    background-color: beige;
+    background-color: yellowgreen;
     display: flex;
     justify-content: flex-end;
     padding: 0.5rem;
@@ -47,7 +46,6 @@ body {
     font-family: inherit;
     font-size: 1.2rem;
     border:none;
-    height: 400px;
     width: 100%;
     padding:20px
 }

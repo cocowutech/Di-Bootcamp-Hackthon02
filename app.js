@@ -10,7 +10,7 @@ const port = 3000;
 app.use(express.json()); 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static('public')); 
-app.use('/index',indexRoute);
+app.use('/',indexRoute);
 app.use('/search',searchRoute);
 app.use('/donation',donationRoute);
 

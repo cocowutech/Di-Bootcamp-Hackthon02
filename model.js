@@ -13,6 +13,55 @@ async function insertDonation(username, email, donationAmount){
 };
 
 
+async function deleteNote(id){
+  const query = 'DELETE FROM notes WHERE id=$1';
+  const values = [id];
+
+  try {
+    const result = await pool.query(query, values);
+    return result.rows[0];
+  } catch (error) {
+    throw error;
+  }
+};
+
+async function insertNote(content){
+  const query = 'INSERT INTO notes (note) VALUES($1) RETURNING *';
+  const values = [content];
+
+  try {
+    const result = await pool.query(query, values);
+    return result.rows[0];
+  } catch (error) {
+    throw error;
+  }
+};
+
+async function updateNote(id,content){
+  const query = 'UPDATE notes SET note =$2 WHERE id=$1';
+  const values = [id,content];
+
+  try {
+    const result = await pool.query(query, values);
+    return result.rows[0];
+  } catch (error) {
+    throw error;
+  }
+};
+
+async function getNotes(){
+  try {
+    const query = `
+      SELECT * FROM notes;`;
+    const { rows } = await pool.query(query);
+    return rows; // Return all matching articles
+  } catch (err) {
+    console.error('Database query error:', err);
+    throw err; // Rethrow the error to handle it in the calling function
+  }
+};
+
+
 async function searchArticles(searchQuery) {
   // Split the search query into individual words
   const searchTerms = searchQuery.split(/\s+/).filter(term => term.length > 0);
@@ -35,5 +84,5 @@ async function searchArticles(searchQuery) {
 }
 
 
-export {insertDonation , searchArticles};
+export {insertDonation, searchArticles, deleteNote, insertNote, updateNote, getNotes};
 

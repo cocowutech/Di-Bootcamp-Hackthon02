@@ -33,15 +33,16 @@ router.post('/note',(req,res)=>{
 router.delete('/note/:id',(req,res)=>{
     const { id } = req.params; // Extract the note ID from the URL
     deleteNote(id)
-    .then(() => {
-        res.status(204).send(); // No content, but successful operation
+    .then((result) => {
+        res.status(200).json(result); // No content, but successful operation
     })
     .catch((error) => {
         res.status(500).json({ error: error.message });
     });
 })
 router.patch('/note/:id',(req,res)=>{
-    let content = req.body
+    const { id } = req.params; // Extract the note ID from the URL
+    let {content} = req.body
     updateNote(id,content)
     .then(data=>{
         if (data) {

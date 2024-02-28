@@ -14,7 +14,7 @@ async function insertDonation(username, email, donationAmount){
 
 
 async function deleteNote(id){
-  const query = 'DELETE FROM notes WHERE id=$1';
+  const query = 'DELETE FROM notes WHERE id=$1 RETURNING *';
   const values = [id];
 
   try {
@@ -37,8 +37,10 @@ async function insertNote(content){
   }
 };
 
+// insertNote("Hihihi")
+
 async function updateNote(id,content){
-  const query = 'UPDATE notes SET note =$2 WHERE id=$1';
+  const query = 'UPDATE notes SET note =$2 WHERE id=$1 RETURNING *';
   const values = [id,content];
 
   try {

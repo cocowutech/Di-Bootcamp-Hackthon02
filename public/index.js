@@ -3,7 +3,7 @@ document.addEventListener('DOMContentLoaded', fetchAndDisplayNotes);
 let markupContainer = document.querySelector('#markupContainer')
 let add = document.querySelector('#add')
 let notesContainer = document.querySelector('#notesContainer')
-let globalIdCounter = 1;
+const defaultNote=`# Type down your feeling here ...`
 
 function fetchAndDisplayNotes() {
     fetch('http://localhost:3000/note')
@@ -11,7 +11,7 @@ function fetchAndDisplayNotes() {
         .then(data => {
             notesContainer.innerHTML = ''; // Clear existing notes
             data.forEach(note => {
-                const noteElement = generateNote(note.id, note.note);
+                const noteElement = generateNote( note.note,note.id);
                 notesContainer.append(noteElement);
             });
         })
@@ -19,28 +19,27 @@ function fetchAndDisplayNotes() {
 }
 
 
-// add.addEventListener('click', function(){
-//     let newNote = generateNote()
-//     notesContainer.append(newNote)
-// })
 
 add.addEventListener('click', function() {
-    const newNote = generateNote(globalIdCounter++, ''); // Use and increment the global ID counter
+    const newNote = generateNote(); 
+    saveNoteToBackend(newNote, defaultNote)
     notesContainer.append(newNote);
     // Optionally, immediately save the new note to the backend here
 });
 
 
-function generateNote(id,content){
+function generateNote(content = defaultNote, id){
     let note = document.createElement('div')
     note.classList.add('note');
-    note.dataset.id = id;
+    if(id){
+        note.dataset.id = id;
+    }
     
     let tools = document.createElement('div')
     tools.classList.add('tools');
 
     let markupContainer = document.createElement('div')
-    markupContainer.innerHTML = marked.parse(`## Type down your feeling here ...`)
+    markupContainer.innerHTML = marked.parse(content)
     
     let editBtn = document.createElement('button')
     editBtn.classList.add('edit');
@@ -57,7 +56,6 @@ function generateNote(id,content){
     note.append(tools,markupContainer,textarea)
     tools.append(editBtn,removebtn)
 
-    globalIdCounter++;
 
     editBtn.addEventListener('click', function(){
         let icon = editBtn.querySelector('i')
@@ -68,6 +66,9 @@ function generateNote(id,content){
             markupContainer.classList.remove('hidden')
             textarea.classList.add('hidden')
             markupContainer.innerHTML =  marked.parse(textarea.value)
+            updateNoteToBackend(note.dataset.id, textarea.value)
+            //run create if we do not have id
+            //run update if we have id
         }else{
             //it means we should perform edit action
             //and switch icon  to save
@@ -79,27 +80,56 @@ function generateNote(id,content){
     
     removebtn.addEventListener('click', function(){
         note.remove()
+        deleteNote(note.dataset.id)
     })
 
     return note
 }
 
 function saveNoteToBackend(noteElement, content) {
-    const noteId = noteElement.dataset.id; // Temporary or permanent ID
 
     fetch('http://localhost:3000/note', {
-        method: 'POST', // Or 'PATCH' if updating an existing note
+        method: 'POST', 
         headers: {
             'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ id: noteId, content: content }),
+        body: JSON.stringify({content: content }),
     })
     .then(response => response.json())
     .then(data => {
-        if (data.id && data.id !== noteId) {
-            // Update the note element with the permanent ID returned by the backend
-            noteElement.dataset.id = data.id;
-        }
+        noteElement.dataset.id = data.id; 
+    })
+    .catch((error) => {
+        console.error('Error:', error);
+    });
+}
+function updateNoteToBackend(id, content) {
+
+    fetch(`http://localhost:3000/note/${id}`, {
+        method: 'PATCH', 
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({content: content }),
+    })
+    .then(response => response.json())
+    .then(data => {
+        return data
+    })
+    .catch((error) => {
+        console.error('Error:', error);
+    });
+}
+
+function deleteNote(id) {
+
+    fetch(`http://localhost:3000/note/${id}`, {
+        method: 'DELETE'
+    })
+    .then(response => response.json())
+    .then(data => {
+        return data
+        
     })
     .catch((error) => {
         console.error('Error:', error);

@@ -49,6 +49,8 @@ async function updateNote(id,content){
   }
 };
 
+// insertNote('I am coming');
+
 async function getNotes(){
   try {
     const query = `

@@ -18,7 +18,7 @@ router.post('/', async (req,res)=> {
     const { name, email, amount } = req.body;
     try {
         const user = await insertDonation(name, email, amount);
-        res.status(201).json({ message: "User's data saved successfully", user });
+        res.status(201).json({ message: "Donation successful!", user });
     } catch (error) {
         console.error('Error saving user data:', error);
         res.status(500).json({ message: 'Failed to save user data' });
